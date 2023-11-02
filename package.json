@@ -1,0 +1,53 @@
+{
+  "name": "ticket-system",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@firebase/storage": "^0.11.2",
+    "@headlessui/react": "^1.7.17",
+    "@napi-rs/canvas": "^0.1.44",
+    "@types/uuid": "^9.0.5",
+    "@yudiel/react-qr-scanner": "^1.1.10",
+    "axios": "^1.5.1",
+    "blob": "^0.1.0",
+    "canvas": "^2.11.2",
+    "cors": "^2.8.5",
+    "firebase": "^10.4.0",
+    "formik": "^2.4.5",
+    "next": "13.5.4",
+    "next-auth": "^4.23.2",
+    "qrcode": "^1.5.3",
+    "razorpay": "^2.9.2",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-icons": "^4.11.0",
+    "react-json-to-csv": "^1.2.0",
+    "react-qr-code": "^2.0.12",
+    "short-url": "^0.0.1",
+    "shorten-url": "^1.1.0",
+    "shortid": "^2.2.16",
+    "twilio": "^4.19.0",
+    "uuid": "^9.0.1",
+    "yup": "^1.3.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/qrcode": "^1.5.2",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@types/react-json-to-csv": "^1.2.2",
+    "@types/shortid": "^0.0.30",
+    "autoprefixer": "^10",
+    "eslint": "^8",
+    "eslint-config-next": "13.5.4",
+    "postcss": "^8",
+    "tailwindcss": "^3",
+    "typescript": "^5"
+  }
+}
