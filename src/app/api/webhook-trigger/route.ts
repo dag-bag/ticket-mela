@@ -58,7 +58,7 @@ export async function POST(request: Request) {
       const shortenedUrl = await shortenUrlWithTinyURL(tickedUrls);
       console.log(udf3);
       sendSMS(
-        ["8766203976"],
+        [customer_mobile as string],
         `नमस्ते ${customer_name},\n\nरोटारी क्लब बरेली के दिवाली मेला में शामिल होने के लिए धन्यवाद! इस लिंक का इस्तेमाल कर अपनी टिकट प्राप्त करें!\n\n${shortenedUrl}\n\nससहयोग टेक्नोलॉजीज की और से दिवाली की बहुत बहुत शुभकामनाएं`
       );
 
