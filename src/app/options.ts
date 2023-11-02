@@ -58,6 +58,6 @@ export const options: NextAuthOptions = {
 };
 
 async function getAllUsers() {
-  const res = await fetch("http://localhost:3000/api/users");
+  const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/users`);
   return res.json();
 }
