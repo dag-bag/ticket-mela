@@ -37,10 +37,10 @@ const TestForm = ({ data, content }: any): JSX.Element => {
   const onSubmit = async (values, { setSubmitting }: any) => {
     await axios
       .post("api/order", {
-        udf1: `1`,
-        udf2: `1`,
+        udf1: `${values.ticket}`,
+        udf2: `0`,
         udf3: "1",
-        amount: `1`,
+        amount: `${values.ticket * 50}`,
         customer_name: values.name,
         customer_mobile: values.number,
       })

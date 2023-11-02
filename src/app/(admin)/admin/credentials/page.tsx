@@ -1,12 +1,11 @@
 import Cred from "@/components/admin/change-password-modal";
 import { collection, getDocs, query } from "firebase/firestore";
-import React, { useState } from "react";
+import React from "react";
 import { db } from "../../../../../firebase.config";
 
 export default async function Page() {
   const data = await getAllUsers();
   // Define your fake JSON data
-
   return <Cred data={data} />;
 }
 

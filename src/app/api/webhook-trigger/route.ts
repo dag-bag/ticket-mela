@@ -5,6 +5,7 @@ import { db } from "../../../../firebase.config";
 import dateToTimestamp from "@/app/libs/dateToTimestamp";
 import ticketArrayGenerator from "@/app/libs/ticketArray";
 import shortenUrlWithTinyURL from "@/app/libs/shortenTinyUrl";
+import { sendSMS } from "@/utils/sms";
 
 export async function POST(request: Request) {
   // Parse the raw content as URL-encoded data
@@ -36,7 +37,6 @@ export async function POST(request: Request) {
   const ticketIds = ticketArrayGenerator(tickets);
 
   ticketIds.forEach(async (id2, index) => {
-    const isChild = index < parseInt(qtc as any);
     const nycRef = doc(db, "tickets", id2 as any);
     const timestamp = dateToTimestamp("29-10-2023");
     batch.set(nycRef, {
@@ -44,7 +44,7 @@ export async function POST(request: Request) {
       number: customer_mobile,
       isExpired: false,
       entry_date: timestamp,
-      type: isChild ? "child" : "adult",
+      type: "tickets",
       name: customer_name,
     });
   });
@@ -57,10 +57,10 @@ export async function POST(request: Request) {
     .then(async () => {
       const shortenedUrl = await shortenUrlWithTinyURL(tickedUrls);
       console.log(udf3);
-      // sendSMS(
-      //   ["8766203976"],
-      //   `नमस्ते ${customer_name},\n\nरोटारी क्लब बरेली के दिवाली मेला में शामिल होने के लिए धन्यवाद! इस लिंक का इस्तेमाल कर अपनी टिकट प्राप्त करें!\n\n${shortenedUrl}\n\nससहयोग टेक्नोलॉजीज की और से दिवाली की बहुत बहुत शुभकामनाएं`
-      // );
+      sendSMS(
+        ["8766203976"],
+        `नमस्ते ${customer_name},\n\nरोटारी क्लब बरेली के दिवाली मेला में शामिल होने के लिए धन्यवाद! इस लिंक का इस्तेमाल कर अपनी टिकट प्राप्त करें!\n\n${shortenedUrl}\n\nससहयोग टेक्नोलॉजीज की और से दिवाली की बहुत बहुत शुभकामनाएं`
+      );
 
       return new Response(request.url, {
         status: 200,
