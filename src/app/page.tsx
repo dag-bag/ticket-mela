@@ -12,7 +12,7 @@ async function getFormData() {
   const res = await fetch(
     "https://main--shimmering-daifuku-1fac39.netlify.app/api/forms",
     {
-      next: { tags: ["forms"], revalidate: 60000 },
+      next: { tags: ["forms"], revalidate: 60 },
     }
   );
   return res.json();
