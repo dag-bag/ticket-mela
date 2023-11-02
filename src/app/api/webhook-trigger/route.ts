@@ -38,7 +38,7 @@ export async function POST(request: Request) {
 
   ticketIds.forEach(async (id2, index) => {
     const nycRef = doc(db, "tickets", id2 as any);
-    const timestamp = dateToTimestamp("29-10-2023");
+    const timestamp = dateToTimestamp("3-10-2023");
     batch.set(nycRef, {
       id: id2,
       number: customer_mobile,
@@ -49,7 +49,7 @@ export async function POST(request: Request) {
     });
   });
   const sanitizedUsername = encodeURIComponent(customer_name || "test");
-  const tickedUrls = `https://www.tickets.sasahyog.com/ticket?ids=${ticketIds.join(
+  const tickedUrls = `https://ticketkaato.com/ticket?ids=${ticketIds.join(
     ","
   )}&mobile=${customer_mobile}&n=${sanitizedUsername}`;
   return await batch
