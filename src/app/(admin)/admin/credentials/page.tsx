@@ -1,23 +1,37 @@
-// import Cred from "@/components/admin/change-password-modal";
-// import React, { useState } from "react";
+import Cred from "@/components/admin/change-password-modal";
+import { collection, getDocs, query } from "firebase/firestore";
+import React, { useState } from "react";
+import { db } from "../../../../../firebase.config";
 
-// export default async function Page() {
-//   const data = await getAllUsers();
-//   // Define your fake JSON data
+export default async function Page() {
+  const data = await getAllUsers();
+  // Define your fake JSON data
 
-//   return <Cred data={data} />;
-// }
+  return <Cred data={data} />;
+}
 
-// // Function to fetch all users from Firestore
-// async function getAllUsers() {
-//   const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/users`, {
-//     next: { tags: ["users"], revalidate: 600000 },
-//   });
-//   return res.json();
-// }
+async function getAllUsers(): Promise<User[]> {
+  try {
+    const usersCollection = collection(db, "users"); // Replace "users" with your Firestore collection name
 
-import React from "react";
+    const usersSnapshot = await getDocs(query(usersCollection));
+    const usersData: User[] = [];
 
-export default function page() {
-  return <div>page</div>;
+    usersSnapshot.forEach((doc) => {
+      usersData.push({
+        id: doc.id,
+        ...doc.data(),
+      } as User);
+    });
+
+    return usersData;
+  } catch (error) {
+    console.error("Error fetching users: ", error);
+    throw error;
+  }
+}
+
+interface User {
+  id: string;
+  // Add more fields as needed
 }
