@@ -1,9 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import { Dialog } from "@headlessui/react";
-import { doc, updateDoc } from "firebase/firestore";
-import { db } from "../../../firebase.config";
-import { revalidatePath } from "next/cache";
 import { add, deleteFn, update } from "@/services/users";
 
 import { BiTrashAlt, BiEditAlt, BiAddToQueue } from "react-icons/bi";

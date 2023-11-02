@@ -49,7 +49,7 @@ async function createUser(data: any) {
   }
 }
 const add = async (user: any) => {
-  revalidatePath(`${process.env.NEXT_PUBLIC_URL}/admin/credentials`);
+  revalidatePath(`/admin/credentials`);
   const res = await createUser(user);
   return res;
 };
