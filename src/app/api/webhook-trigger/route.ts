@@ -6,6 +6,7 @@ import dateToTimestamp from "@/app/libs/dateToTimestamp";
 import ticketArrayGenerator from "@/app/libs/ticketArray";
 import shortenUrlWithTinyURL from "@/app/libs/shortenTinyUrl";
 import { sendSMS } from "@/utils/sms";
+import { sendTemplateMessage } from "@/utils/whatsapp";
 
 export async function POST(request: Request) {
   // Parse the raw content as URL-encoded data
@@ -38,7 +39,7 @@ export async function POST(request: Request) {
 
   ticketIds.forEach(async (id2, index) => {
     const nycRef = doc(db, "tickets", id2 as any);
-    const timestamp = dateToTimestamp("3-10-2023");
+    const timestamp = dateToTimestamp(udf3 as any);
     batch.set(nycRef, {
       id: id2,
       number: customer_mobile,
@@ -56,11 +57,12 @@ export async function POST(request: Request) {
     .commit()
     .then(async () => {
       const shortenedUrl = await shortenUrlWithTinyURL(tickedUrls);
-      console.log(udf3);
-      sendSMS(
-        [customer_mobile as string],
-        `नमस्ते ${customer_name},\n\nरोटारी क्लब बरेली के दिवाली मेला में शामिल होने के लिए धन्यवाद! इस लिंक का इस्तेमाल कर अपनी टिकट प्राप्त करें!\n\n${shortenedUrl}\n\nससहयोग टेक्नोलॉजीज की और से दिवाली की बहुत बहुत शुभकामनाएं`
+      const data = await sendTemplateMessage(
+        customer_name as string,
+        shortenedUrl,
+        customer_mobile as string
       );
+      console.log(data);
 
       return new Response(request.url, {
         status: 200,

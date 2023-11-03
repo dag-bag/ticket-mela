@@ -10,6 +10,7 @@ const TestForm = ({ data, content }: any): JSX.Element => {
     number: Yup.string()
       .matches(/^[0-9]{10}$/, "Mobile Number must be a 10-digit number")
       .required("Mobile Number is required"),
+    selectedDate: Yup.string().required("Date is required"),
     // @ts-ignore
     ...data.reduce((schema, field) => {
       if (field.category !== "N/A") {
@@ -39,8 +40,8 @@ const TestForm = ({ data, content }: any): JSX.Element => {
       .post("api/order", {
         udf1: `${values.ticket}`,
         udf2: `0`,
-        udf3: "1",
-        amount: `${values.ticket * 50}`,
+        udf3: values.selectedDate,
+        amount: `${values.ticket * 1}`,
         customer_name: values.name,
         customer_mobile: values.number,
       })
@@ -123,9 +124,8 @@ const TestForm = ({ data, content }: any): JSX.Element => {
                     className="text-red-500"
                   />
                 </div>
-
                 <div className="form-group">
-                  <label htmlFor="number">Mobile Number</label>
+                  <label htmlFor="number">Mobile Number (WhatsApp Only)</label>
                   <Field
                     type="text"
                     id="number"
@@ -139,8 +139,26 @@ const TestForm = ({ data, content }: any): JSX.Element => {
                     className="text-red-500"
                   />
                 </div>
+                <div className="form-group">
+                  <label htmlFor="selectedDate">Select a Date</label>
+                  <Field
+                    as="select"
+                    id="selectedDate"
+                    name="selectedDate"
+                    className="px-2 py-2 rounded-md w-full border"
+                  >
+                    <option value="">Select a Date</option>
+                    <option value="2023-11-04">2023-11-04</option>
+                    <option value="2023-11-05">2023-11-05</option>
+                    <option value="2023-11-06">2023-11-06</option>
+                  </Field>
+                  <ErrorMessage
+                    name="selectedDate"
+                    component="div"
+                    className="text-red-500"
+                  />
+                </div>
                 {renderDynamicFields()}
-
                 <button
                   type="submit"
                   className="bg-indigo-500 text-white font-bold px-20 py-3 text-xl rounded-lg w-full disabled:cursor-not-allowed disabled:opacity-50"
