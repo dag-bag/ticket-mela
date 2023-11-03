@@ -1,12 +1,18 @@
+"use client";
 import Cred from "@/components/admin/change-password-modal";
 import { collection, getDocs, query } from "firebase/firestore";
 import React from "react";
 import { db } from "../../../../../firebase.config";
-
+import useSWR from "swr";
+import Loading from "@/components/admin/loading";
 export default async function Page() {
-  const data = await getAllUsers();
+  const { data, error, isLoading, mutate } = useSWR(
+    "/credentials",
+    getAllUsers
+  );
+  if (isLoading) return <Loading />;
   // Define your fake JSON data
-  return <Cred data={data} />;
+  return <Cred data={data} mutate={mutate} />;
 }
 
 async function getAllUsers(): Promise<User[]> {

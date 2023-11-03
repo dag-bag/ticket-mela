@@ -7,11 +7,9 @@ import {
   doc,
   updateDoc,
 } from "firebase/firestore";
-import { revalidatePath } from "next/cache";
 import { db } from "../../../firebase.config";
 
 const update = async (user: any) => {
-  revalidatePath("/admin/credentials");
   const res = await updateUser(user);
   console.log(res);
 };
@@ -49,13 +47,10 @@ async function createUser(data: any) {
   }
 }
 const add = async (user: any) => {
-  revalidatePath(`/admin/credentials`);
   const res = await createUser(user);
   return res;
 };
 const deleteFn = async (userId: string) => {
-  revalidatePath("/admin/credentials");
-
   try {
     const userDoc = doc(db, "users", userId);
     await deleteDoc(userDoc);

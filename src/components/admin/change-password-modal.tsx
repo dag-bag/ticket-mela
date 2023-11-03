@@ -10,7 +10,7 @@ interface User {
   role: string;
 }
 
-export default function Page({ data }: any) {
+export default function Page({ data, mutate }: any) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [newUser, setNewUser] = useState({
@@ -25,6 +25,7 @@ export default function Page({ data }: any) {
 
   const openModal = (user: User) => {
     setEditingUser(user);
+    mutate("/credentials");
     setIsModalOpen(true);
   };
 
@@ -35,6 +36,7 @@ export default function Page({ data }: any) {
 
   const handleEdit = async () => {
     await update(editingUser);
+    mutate("/credentials");
     closeModal();
   };
 
@@ -43,10 +45,8 @@ export default function Page({ data }: any) {
   };
 
   const handleAdd = async () => {
-    // Implement add logic here
-    // Call a create function to add the new user
-    // Close the modal
     await add(newUser);
+    mutate("/credentials");
     closeAddModal();
   };
 
