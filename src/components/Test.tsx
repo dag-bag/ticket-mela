@@ -147,10 +147,9 @@ const TestForm = ({ data, content }: any): JSX.Element => {
                     name="selectedDate"
                     className="px-2 py-2 rounded-md w-full border"
                   >
-                    <option value="">Select a Date</option>
-                    <option value="2023-11-04">2023-11-04</option>
-                    <option value="2023-11-05">2023-11-05</option>
-                    <option value="2023-11-06">2023-11-06</option>
+                    <option value="4-10-2023">4-10-2023</option>
+                    <option value="5-10-2023">5-10-2023</option>
+                    <option value="6-10-2023">6-10-2023</option>
                   </Field>
                   <ErrorMessage
                     name="selectedDate"
