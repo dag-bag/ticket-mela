@@ -147,6 +147,7 @@ const TestForm = ({ data, content }: any): JSX.Element => {
                     name="selectedDate"
                     className="px-2 py-2 rounded-md w-full border"
                   >
+                    <option value="">Select a Date</option>
                     <option value="4-10-2023">4-10-2023</option>
                     <option value="5-10-2023">5-10-2023</option>
                     <option value="6-10-2023">6-10-2023</option>
