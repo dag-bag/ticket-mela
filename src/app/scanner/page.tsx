@@ -1,7 +1,7 @@
 "use client";
 import { signOut, useSession } from "next-auth/react";
 // import { signOut, useSession } from "next-auth/react";
-import QRCodeScanner from "../components/Scanner";
+import QRCodeScanner from "../../components/Scanner";
 export default function Home() {
   return (
     <div className=" h-screen w-full max-w-md m-auto flex items-center justify-center">

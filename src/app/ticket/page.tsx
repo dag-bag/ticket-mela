@@ -1,8 +1,8 @@
 import React from "react";
 
 import Link from "next/link";
-import Ticket from "../components/Ticket";
-import SelfAdvertisement from "../components/SelfAdvertisement";
+import Ticket from "../../components/Ticket";
+import SelfAdvertisement from "../../components/SelfAdvertisement";
 
 export default async function Page({ searchParams }: any) {
   const ids = searchParams.ids.split(",");

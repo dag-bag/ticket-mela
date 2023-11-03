@@ -1,6 +1,6 @@
 import axios from "axios";
 import { NextResponse } from "next/server";
-import customFirestoreDocIdGenerator from "@/app/libs/customFirestoreDocIdGenerator";
+import customFirestoreDocIdGenerator from "@/libs/customFirestoreDocIdGenerator";
 export async function POST(request: Request) {
   const body = await request.json();
   try {

@@ -2,9 +2,9 @@ import { NextResponse } from "next/server";
 import { setDoc, doc } from "firebase/firestore";
 import { writeBatch } from "firebase/firestore";
 import { db } from "../../../../firebase.config";
-import dateToTimestamp from "@/app/libs/dateToTimestamp";
-import ticketArrayGenerator from "@/app/libs/ticketArray";
-import shortenUrlWithTinyURL from "@/app/libs/shortenTinyUrl";
+import dateToTimestamp from "@/libs/dateToTimestamp";
+import ticketArrayGenerator from "@/libs/ticketArray";
+import shortenUrlWithTinyURL from "@/libs/shortenTinyUrl";
 import { sendSMS } from "@/utils/sms";
 import { sendTemplateMessage } from "@/utils/whatsapp";
 

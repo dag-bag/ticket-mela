@@ -1,7 +1,7 @@
 "use client";
 import QRCode from "react-qr-code";
 import { useEffect, useState } from "react";
-import { db } from "../../../firebase.config";
+import { db } from "../../firebase.config";
 import { doc, onSnapshot } from "firebase/firestore";
 
 const Ticket = ({ id, searchParams }: any) => {
