@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { add, deleteFn, update } from "@/services/users";
-
+import { useSWRConfig } from "swr";
 import { BiTrashAlt, BiEditAlt, BiAddToQueue } from "react-icons/bi";
 
 interface User {
@@ -10,7 +10,8 @@ interface User {
   role: string;
 }
 
-export default function Page({ data, mutate }: any) {
+export default function Page({ data }: any) {
+  const { mutate } = useSWRConfig();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [newUser, setNewUser] = useState({
@@ -25,7 +26,6 @@ export default function Page({ data, mutate }: any) {
 
   const openModal = (user: User) => {
     setEditingUser(user);
-    mutate("/credentials");
     setIsModalOpen(true);
   };
 
@@ -71,7 +71,7 @@ export default function Page({ data, mutate }: any) {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {data.map((user: any, index: any) => (
+          {data?.map((user: any, index: any) => (
             <tr key={index}>
               <td className="px-6 py-4 whitespace-nowrap">{user.email}</td>
               <td className="px-6 py-4 whitespace-nowrap">{user.role}</td>
@@ -84,7 +84,10 @@ export default function Page({ data, mutate }: any) {
                 </button>
                 <button
                   className="ml-2 px-4 py-2  rounded-md hover:bg-gray-100 focus:outline-none focus:shadow-outline-red active:bg-gray-500 transition duration-150 ease-in-out"
-                  onClick={() => deleteFn(user.id)}
+                  onClick={async () => {
+                    deleteFn(user.id);
+                    mutate("/credentials");
+                  }}
                 >
                   <BiTrashAlt size={20} />
                 </button>

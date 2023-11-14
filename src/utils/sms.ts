@@ -23,9 +23,4 @@ function sendSMS(numbers: string[], message: string): void {
     });
 }
 
-// Example usage:
-const apiKey = "YOUR_API_KEY"; // Replace with your Fast2SMS API key
-const numbers = ["9999999999", "8888888888", "7777777777"];
-const message = "This is a test message";
-
 export { sendSMS };

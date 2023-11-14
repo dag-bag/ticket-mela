@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { add, deleteFn, update } from "@/services/forms";
 import { BiTrashAlt, BiEditAlt, BiAddToQueue } from "react-icons/bi";
-
+import { useSWRConfig } from "swr";
 interface Form {
   type: string;
   label: string;
@@ -15,6 +15,7 @@ interface Form {
 }
 
 export default function FormManagement({ data }: any) {
+  const { mutate } = useSWRConfig();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [newForm, setNewForm] = useState<Form | any>({
@@ -39,6 +40,7 @@ export default function FormManagement({ data }: any) {
 
   const handleEdit = async () => {
     await update(editingForm);
+    mutate("/forms");
     closeModal();
   };
 
@@ -47,10 +49,8 @@ export default function FormManagement({ data }: any) {
   };
 
   const handleAdd = async () => {
-    // Implement add logic here
-    // Call a create function to add the new form
-    // Close the modal
     await add(newForm);
+    mutate("/forms");
     closeAddModal();
   };
 
@@ -114,7 +114,10 @@ export default function FormManagement({ data }: any) {
                 </button>
                 <button
                   className="ml-2 px-4 py-2  rounded-md hover:bg-gray-100 focus:outline-none focus:shadow-outline-red active:bg-gray-500 transition duration-150 ease-in-out"
-                  onClick={() => deleteFn(form.id as string)}
+                  onClick={() => {
+                    deleteFn(form.id as string);
+                    mutate("/forms");
+                  }}
                 >
                   <BiTrashAlt size={20} />
                 </button>

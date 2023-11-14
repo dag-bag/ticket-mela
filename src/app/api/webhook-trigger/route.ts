@@ -57,12 +57,7 @@ export async function POST(request: Request) {
     .commit()
     .then(async () => {
       const shortenedUrl = await shortenUrlWithTinyURL(tickedUrls);
-      const data = await sendTemplateMessage(
-        customer_name as string,
-        shortenedUrl,
-        customer_mobile as string
-      );
-      console.log(data);
+      sendSMS([customer_mobile as string], `मेला टिकट लिंक - ${shortenedUrl}`);
 
       return new Response(request.url, {
         status: 200,

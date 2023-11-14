@@ -2,12 +2,13 @@
 import React, { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { createAd, deleteAd, updateAd } from "@/services/ads";
+import { useSWRConfig } from "swr";
 
 interface Ad {
   id: string;
   title: string;
   description: string;
-  imageURL: string;
+  imageURL: File | any;
   // Add other ad-related fields here
 }
 
@@ -16,6 +17,7 @@ interface AdsManagementProps {
 }
 
 export default function AdsManagement({ data }: AdsManagementProps) {
+  const { mutate } = useSWRConfig();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [newAd, setNewAd] = useState<Ad>({
@@ -40,7 +42,9 @@ export default function AdsManagement({ data }: AdsManagementProps) {
   const handleEdit = async () => {
     if (editingAd) {
       await updateAd(editingAd.id, editingAd);
+      mutate("/ads");
     }
+
     closeModal();
   };
 
@@ -50,13 +54,14 @@ export default function AdsManagement({ data }: AdsManagementProps) {
 
   const handleAdd = async () => {
     await createAd(newAd);
+    mutate("/ads");
     closeAddModal();
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
     if (file) {
-      setNewAd({ ...newAd, imageURL: URL.createObjectURL(file) });
+      setNewAd({ ...newAd, imageURL: file });
     }
   };
 
@@ -98,8 +103,14 @@ export default function AdsManagement({ data }: AdsManagementProps) {
               </td>
               {/* Add other table data for ad fields */}
               <td>
-                <button onClick={() => openModal(ad)}>Edit</button>
-                <button onClick={() => deleteAd(ad.id)}>Delete</button>
+                <button
+                  onClick={() => {
+                    deleteAd(ad.id);
+                    mutate("/ads");
+                  }}
+                >
+                  Delete
+                </button>
               </td>
             </tr>
           ))}

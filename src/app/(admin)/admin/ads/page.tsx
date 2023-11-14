@@ -1,19 +1,33 @@
-// import AdsManagement from "@/components/admin/ads-modal";
-// import React from "react";
-
-// export default async function page() {
-//   const ads = await getAds();
-//   return <AdsManagement data={ads} />;
-// }
-// async function getAds() {
-//   const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/ads`, {
-//     next: { tags: ["ads"], revalidate: 500000 },
-//   });
-//   return res.json();
-// }
-
+"use client";
+import AdsManagement from "@/components/admin/ads-modal";
+import Loading from "@/components/admin/loading";
+import { collection, getDocs, query } from "firebase/firestore";
 import React from "react";
+import useSWR from "swr";
+import { db } from "../../../../../firebase.config";
 
-export default function page() {
-  return <div>page</div>;
+export default function Page() {
+  const { data, isLoading } = useSWR("/ads", getAds);
+  if (isLoading) return <Loading />;
+  return <AdsManagement data={data} />;
+}
+async function getAds(): Promise<any> {
+  try {
+    const usersCollection = collection(db, "ads"); // Replace "users" with your Firestore collection name
+
+    const usersSnapshot = await getDocs(query(usersCollection));
+    const usersData: any = [];
+
+    usersSnapshot.forEach((doc) => {
+      usersData.push({
+        id: doc.id,
+        ...doc.data(),
+      });
+    });
+
+    return usersData;
+  } catch (error) {
+    console.error("Error fetching users: ", error);
+    throw error;
+  }
 }

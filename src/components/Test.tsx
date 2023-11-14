@@ -16,7 +16,7 @@ const TestForm = ({ data, content }: any): JSX.Element => {
       if (field.category !== "N/A") {
         schema[field.name] = Yup.number()
           .nullable()
-          .required(`"${field.category}" is required`);
+          .required(`${field.category} is required`);
       }
       return schema;
     }, {}),
@@ -57,13 +57,15 @@ const TestForm = ({ data, content }: any): JSX.Element => {
   const renderDynamicFields = () => {
     return data.map((field: any) => (
       <div className="form-group" key={field.id}>
-        <label htmlFor={field.id}>{field.label}</label>
+        <label className="text-sm font-semibold" htmlFor={field.id}>
+          {field.label}
+        </label>
         <Field
           type={field.type}
           id={field.id}
           name={field.name}
           placeholder={field.placeholder}
-          className="px-2 py-2 rounded-md w-full border placeholder:text-sm font-mono"
+          className="px-3 py-2 rounded-md w-full border placeholder:text-sm  "
         />
         <ErrorMessage
           name={field.name}
@@ -78,13 +80,15 @@ const TestForm = ({ data, content }: any): JSX.Element => {
   }
 
   return (
-    <div className="w-screen h-screen md:flex md:items-center md:justify-center">
-      <div className="max-w-md">
+    <div className="w-screen h-screen flex items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-500">
+      <div className="max-w-md bg-white rounded-xl">
         <div className="flex items-center justify-center mt-5">
           <SelfAdvertisement />
         </div>
-        <h2 className="text-xl mb-3 font-bold text-center">{content?.title}</h2>
-        <p className="text-center text-sm mb-3 px-2 font-medium text-gray-500">
+        <h2 className="text-2xl mb-3 font-extrabold text-center">
+          {content?.title}
+        </h2>
+        <p className="text-center text-sm mb-3 px-2 font-medium text-gray-500 italic">
           {content.description}
         </p>
         <Formik
@@ -107,65 +111,74 @@ const TestForm = ({ data, content }: any): JSX.Element => {
             };
             const total = getTotalAmount();
             return (
-              <Form className="w-full grid space-y-2 p-5">
+              <Form className="w-full grid space-y-3 p-5 ">
                 {/* Render dynamic input fields */}
                 <div className="form-group">
-                  <label htmlFor="name">Name</label>
+                  <label className="text-sm font-semibold" htmlFor="name">
+                    Name
+                  </label>
                   <Field
                     type="text"
                     id="name"
                     name="name"
                     placeholder="Your Name"
-                    className="px-2 py-2 rounded-md w-full border placeholder:text-sm font-mono"
+                    className="px-3 py-2 rounded-md w-full border placeholder:text-sm  "
                   />
                   <ErrorMessage
                     name="name"
                     component="div"
-                    className="text-red-500"
+                    className="text-red-500 text-sm mt-2"
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="number">Mobile Number (WhatsApp Only)</label>
+                  <label className="text-sm font-semibold" htmlFor="number">
+                    Mobile Number (WhatsApp Only)
+                  </label>
                   <Field
                     type="text"
                     id="number"
                     name="number"
                     placeholder="Mobile Number"
-                    className="px-2 py-2 rounded-md w-full border placeholder:text-sm font-mono"
+                    className="px-3 py-2 rounded-md w-full border placeholder:text-sm"
                   />
                   <ErrorMessage
                     name="number"
                     component="div"
-                    className="text-red-500"
+                    className="text-red-500 text-sm mt-2"
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="selectedDate">Select a Date</label>
+                  <label
+                    className="text-sm font-semibold"
+                    htmlFor="selectedDate"
+                  >
+                    Select Entry Date
+                  </label>
                   <Field
                     as="select"
                     id="selectedDate"
                     name="selectedDate"
-                    className="px-2 py-2 rounded-md w-full border !font-mono"
+                    className="px-3 py-2.5 rounded-md w-full border"
                   >
-                    <option value="">Select a Date</option>
-                    <option value="4-10-2023">4-10-2023</option>
-                    <option value="5-10-2023">5-10-2023</option>
-                    <option value="6-10-2023">6-10-2023</option>
+                    <option value="">Select Date</option>
+                    <option value="4-11-2023">4-11-2023</option>
+                    <option value="5-11-2023">5-11-2023</option>
+                    <option value="6-11-2023">6-11-2023</option>
                   </Field>
                   <ErrorMessage
                     name="selectedDate"
                     component="div"
-                    className="text-red-500"
+                    className="text-red-500 text-sm mt-2"
                   />
                 </div>
                 {renderDynamicFields()}
                 <button
                   type="submit"
-                  className="bg-indigo-500 text-white font-bold px-20 py-3 text-xl rounded-lg w-full disabled:cursor-not-allowed disabled:opacity-50"
+                  className="bg-blue-500 text-white font-bold px-5 py-2 text-xl rounded-lg w-full disabled:cursor-not-allowed disabled:opacity-50"
                   disabled={total === 0 || isSubmitting}
                 >
                   {isSubmitting ? "Loading..." : content.buttonText}
-                  <span className="font-mono ml-2">{total}</span>
+                  <span className="  ml-2">₹{total}</span>
                 </button>
               </Form>
             );
@@ -181,40 +194,41 @@ export default TestForm;
 const PaymentPopup = (props: any) => {
   return (
     <div className="w-screen h-screen flex items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-500">
-      <div className="bg-white p-5 rounded-xl min-w-[300px]">
+      <div className="bg-white p-5 rounded-xl max-w-[450px] md:min-w-[450px] min-w-[300px] flex items-center flex-col">
         <SelfAdvertisement />
-        <div className="">
-          <QRCode
-            value={props.data.upi_intent.bhim_link}
-            className="w-[230px] mx-auto"
-          />
-        </div>
-
-        <div>
-          <p className="text-sm text-center font-bold my-3">Pay with Apps</p>
-        </div>
-
-        <div className="flex flex-col gap-2 ">
+        <QRCode value={props.data.upi_intent.bhim_link} className=" mx-auto" />
+        <p className="text-sm text-center font-bold my-3">
+          Pay with Apps{" "}
+          <span className="text-sm hidden md:inline">
+            ( Only works in mobile )
+          </span>
+        </p>
+        <div className="flex flex-col gap-2 w-full ">
           <Button
             img="/paytm.png"
+            title={"Paytm"}
             href={props.data.upi_intent.paytm_link}
-            title={"Paytm "}
           />
           <Button
             img="/Phonepe.png"
+            title={"PhonePe"}
             href={props.data.upi_intent.phonepe_link}
-            title={"PhonePe "}
           />
           <Button
             img="/gpay.png"
+            title={"Gpay"}
             href={props.data.upi_intent.gpay_link}
-            title={"Gpay "}
           />
           <Button
             img="/BHIM.png"
+            title={"Bhim Pay"}
             href={props.data.upi_intent.bhim_link}
-            title={"Bhim Pay "}
           />
+          <p className=" text-gray-700 text-sm italic font-semibold p-5">
+            <span className=" font-extrabold">Important Note -</span> After
+            payment, it may take up to 5 minutes for tickets to appear on
+            WhatsApp message.
+          </p>
         </div>
       </div>
     </div>
@@ -234,21 +248,4 @@ const Button = ({ href, title, img }: any) => {
       <Image src={img} alt={title} height={20} width={100} />
     </Link>
   );
-};
-
-const extractCategoryValues = (
-  formValues: Record<string, string>,
-  data: any[]
-): Record<string, string> => {
-  const categories: string[] = data
-    .filter((field) => field.category !== "N/A")
-    .map((field) => field.category);
-
-  const udf3: Record<string, string> = {};
-
-  categories.forEach((category) => {
-    udf3[category] = formValues[category];
-  });
-
-  return udf3;
 };
