@@ -1,6 +1,6 @@
 import Alert from "./Alert";
 import React, { useState } from "react";
-import { db } from "../../../firebase.config";
+import { db } from "../../firebase.config";
 import { type Message, Status } from "../types";
 import SelfAdvertisement from "./SelfAdvertisement";
 import { QrScanner } from "@yudiel/react-qr-scanner";

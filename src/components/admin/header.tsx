@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { HiMenuAlt3 } from "react-icons/hi";
-import SelfAdvertisement from "@/app/components/SelfAdvertisement";
+import SelfAdvertisement from "@/components/SelfAdvertisement";
 const Header = () => {
   return (
     <div className="flex items-center justify-between pr-5">

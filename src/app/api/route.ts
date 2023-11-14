@@ -8,9 +8,9 @@ export interface Body {
 import { NextResponse } from "next/server";
 import { db } from "../../../firebase.config";
 import { doc, writeBatch } from "firebase/firestore";
-import ticketArrayGenerator from "../libs/ticketArray";
-import dateToTimestamp from "../libs/dateToTimestamp";
-import shortenUrlWithTinyURL from "../libs/shortenTinyUrl";
+import ticketArrayGenerator from "../../libs/ticketArray";
+import dateToTimestamp from "../../libs/dateToTimestamp";
+import shortenUrlWithTinyURL from "../../libs/shortenTinyUrl";
 
 export async function POST(request: Request) {
   const batch = writeBatch(db);
